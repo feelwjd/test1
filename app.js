@@ -114,13 +114,14 @@ app.post('/login', function(req, res) {
     if(members[i].id == id && members[i].pwd == pwd) {
       use = 0;
       console.log('로그인 되었어요');
-      res.redirect('/member/' +(i+1)); 
+      //res.redirect('/member/'+(i+1)); 
+      res.redirect('/member/'+members[i].id_1)
     } 
   }  
 
   if(use == 1) {
     console.log('비밀번호나 패스워드가 틀립니다.');
-     res.redirect('/'); 
+     res.redirect('/login'); 
   }
   });
 });
@@ -153,9 +154,9 @@ app.post(['/edit/:idx'], function(req, res){
   const hobby = req.body.hobby;
   var sql = 'SELECT * FROM test WHERE id_1=?';
   conn.query(sql,idx,function(err,result){
-    const sql2 = "UPDATE test SET (name, id, pwd, tel, job, hobby) VALUES('"+name+"','"+id+"','"+pwd+"','"+tel+"','"+job+"','"+hobby+"') where id=1;"
+    const sql2 = "UPDATE test SET (id_1, name, id, pwd, tel, job, hobby) VALUES('"+idx+"','"+name+"','"+id+"','"+pwd+"','"+tel+"','"+job+"','"+hobby+"') where id=1;"
     conn.query(sql2,idx,function(err,result){
-      res.redirect('/member/1')
+      res.redirect('/member/'+idx)
     });
   });
 });
