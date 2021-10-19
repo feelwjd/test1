@@ -154,7 +154,7 @@ app.post(['/edit/:idx'], function(req, res){
   const hobby = req.body.hobby;
   var sql = 'SELECT * FROM test WHERE id_1=?';
   conn.query(sql,idx,function(err,result){
-    const sql2 = "UPDATE test SET (id_1, name, id, pwd, tel, job, hobby) VALUES('"+idx+"','"+name+"','"+id+"','"+pwd+"','"+tel+"','"+job+"','"+hobby+"') where id=1;"
+    const sql2 = "UPDATE test SET (id_1, name, id, pwd, tel, job, hobby) VALUES('"+idx+"','"+name+"','"+id+"','"+pwd+"','"+tel+"','"+job+"','"+hobby+"') where id_1 = '"+idx+"';"
     conn.query(sql2,idx,function(err,result){
       res.redirect('/member/'+idx)
     });
