@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+  body
+    artcle
+      h1= 'Delete? '+member.name + '님 탈퇴하겠습니끼'
+      form(action='/delete/'+member.id_1 method='post')
+        p
+          input(type='submit' value='YES')
+      a(href='/member/'+member.id_1) NO
