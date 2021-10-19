@@ -167,7 +167,7 @@ app.get('/delete/:idx', function(req, res){
   var idx = req.params.idx;
   var sql = 'SELECT * FROM test WHERE id_1=?';
   conn.query(sql, [idx], function(err, member){
-    res.render('view', {member : member[0]});
+    res.render('delete', {member : member[0]});
   });
 });
 
@@ -175,9 +175,9 @@ app.post('/delete/:idx', function(req, res){
   var idx = req.params.idx;
   var sql = 'SELECT * FROM test WHERE id_1=?';
   conn.query(sql,idx,function(err,result){
-    const sql2 = "DELETE FROM test where id_1 = '"+idx+"';"
+    const sql2 = "DELETE FROM test where id_1 = "+idx+";"
     conn.query(sql2,idx,function(err,result){
-      res.render('view', {member : member[0]});
+      res.redirect('../login');
     });
   });
 });
