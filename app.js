@@ -13,56 +13,12 @@ app.set('views', './views');
 app.listen(port, function(){
   console.log(`Example app listening at http://localhost:${port}`);
 });
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get('/form', function(req, res) {  
-  res.render('form');                     // form.Jade
-})
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-app.post("/topic", function (req, res) {   
-    var title = req.body.title;                  // 전송된 제목(파일 이름)         
-    var description = req.body.description     // 전송된 내용(파일 내용)
-
-    //          파일이름,      내용,         에러 
-    fs.writeFile('data/' + title, description , function(err) {
-      if(err) {
-        console.log(err);
-        res.status(500).send('Internal Server Error');
-      }
-      
-      res.redirect('/topic/');              // 경로 자동 이동
-    });  
-});
-///////////////////////////////////////////////////////////////////////
-app.get(["/topic", "/topic/:title"], function (req, res) { // FORM
-    var title = req.params.title;        // 선택한 파일
-    fs.readdir('data', function(err, titles) {
-      if(err) {
-        console.log(err);
-        res.status(500).send('Internal Server Error');
-      }
-      if(title) {         // 파일이 있는 경우 파일 내용 읽음
-        fs.readFile('data/'+title, function(err, description) {
-          res.render("view", {titles : titles, title : title, description : description}); 
-        });
-      }
-      else          // 파일이 없으면
-        res.render("view", {titles : titles, title:'Welcome', description:'Topic is'}); 
-    })
-  });
-
-// form의 post 전송을 위한 미들웨어
-app.use(express.urlencoded({ extended: true }));  
-app.use(express.json());
-
-app.set('view engine', 'jade');             
-app.set('views', './views');    
-
 var mysql = require('mysql');
 
 const connection = {   
-  host: "database-1.ceiotvbr944v.ap-northeast-2.rds.amazonaws.com",     // IP
+  host: "cloudcomputing.ceiotvbr944v.ap-northeast-2.rds.amazonaws.com",     // IP
   port: "3306",                  // PORT
-  user: "admin",                  // 사용자
+  user: "cloud",                  // 사용자
   password: "12345678",    // 비밀 번호
   database: "member",       // Database 명
 };
@@ -88,10 +44,11 @@ app.post('/register', function(req, res) {
   const id = req.body.id;
   const pwd = req.body.pwd;
   const tel = req.body.tel;
+  const gender = req.body.gender;
   const job = req.body.job;
   const hobby = req.body.hobby;
 
-  const sql = "INSERT INTO test (name, id, pwd, tel, job, hobby) VALUES('"+name+"','"+id+"','"+pwd+"','"+tel+"','"+job+"','"+hobby+"')";
+  const sql = "INSERT INTO test (name, id, pwd, tel, gender, job, hobby) VALUES('"+name+"','"+id+"','"+pwd+"','"+tel+"','"+gender+"','"+job+"','"+hobby+"')";
     conn.query(sql, function(err, topics, fields){
     res.redirect('/login');              // 회원가입 후 로그인으로 자동이돋
   });
@@ -150,11 +107,12 @@ app.post(['/edit/:idx'], function(req, res){
   const id = req.body.id;
   const pwd = req.body.pwd;
   const tel = req.body.tel;
+  const gender = req.body.gender;
   const job = req.body.job;
   const hobby = req.body.hobby;
   var sql = 'SELECT * FROM test WHERE id_1=?';
   conn.query(sql,idx,function(err,result){
-    const sql2 = "UPDATE test SET id_1 ='"+idx+"', name ='"+name+"', id= '"+id+"', pwd ='"+pwd+"' , tel = '"+tel+"', job = '"+job+"', hobby = '"+hobby+"' where id_1 = '"+idx+"';"
+    const sql2 = "UPDATE test SET id_1 ='"+idx+"', name ='"+name+"', id= '"+id+"', pwd ='"+pwd+"' , tel = '"+tel+"', gender = '"+gender+"', job = '"+job+"', hobby = '"+hobby+"' where id_1 = '"+idx+"';"
     conn.query(sql2,idx,function(err,result){
       res.redirect('/member/'+idx)
     });
