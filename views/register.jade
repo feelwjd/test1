@@ -1,35 +1,71 @@
 doctype html
+
 html
+
   head
+
     meta(charset='utf-8')
+
   body
+
     h1
+
     | 회원가입
+
     form(action='/register' method='post')
+
       p
+
         input(type='text' name='name' placeholder='성명')
+
       p
+
         input(type='text' name='id' placeholder='아이디')
+
       p
+
         input(type='password' name='pwd' placeholder='비밀번호')
+
       p
+
         input(type='text' name='tel' placeholder='전화번호')
+
       P
+
         select(name="job")
+
           - repeations = ['대학생', '공무원', '회사원', '자영업', '연구원', '기타']
+
           - for item in repeations
+
             option #{item}
+
       P
-        input(type="radio", name="gender" value = '남자') 
+
+        input(type="radio", name="gender" value = '남자')
+
         | 남자<br>
+
         input(type="radio", name="gender"  value = '여자' checked)
+
         | 여자<br>
+
       P
-        input(type="checkbox", name="hobby"  value = '음악감상' checked) 
+
+        input(type="checkbox", name="hobby"  value = '음악감상' checked)
+
         | 음악감상<br>
+
         input(type="checkbox", name="hobby" value = '운동')
+
         | 운동<br>
+
         input(type="checkbox", name="hobby" value = '기타')
+
         | 기타<br>
+
       p
+
         input(type='submit')
+
+ 
