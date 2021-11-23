@@ -12,10 +12,10 @@ html
 
       h1= 'Delete? '+member.name + '님 탈퇴하겠습니끼'
 
-      form(action='/dev/delete/'+member.id_1 method='post')
+      form(action='/delete/'+member.id_1 method='post')
 
         p
 
           input(type='submit' value='YES')
 
-      a(href='/dev/member/'+member.id_1) NO
+      a(href='/member/'+member.id_1) NO
